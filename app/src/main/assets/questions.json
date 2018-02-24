@@ -1,0 +1,44 @@
+{
+  "boolean": {
+    "question": "The sky is blue.",
+    "correctAnswer": "true"
+  },
+  "multipleChoice": [
+    {
+      "question": "What is 2 + 1?",
+      "answers": [
+        [false, "1"],
+        [false, "2"],
+        [false, "4"],
+        [true, "3"]
+      ]
+    },
+    {
+      "question": "What is 5 + 10?",
+      "answers": [
+        [true, "15"],
+        [false, "50"],
+        [false, "10"],
+        [false, "5"]
+      ]
+    }
+  ],
+  "multipleAnswer": {
+    "question": "Select all that apply. What will give you the answer 12?",
+    "answers": [
+      "1 x 12",
+      "2 x 6",
+      "3 x 4",
+      "3 + 4"
+    ],
+    "correctAnswer": [
+      "1 x 12",
+      "2 x 6",
+      "3 x 4"
+    ]
+  },
+  "textEntry": {
+    "question": "What year is it?",
+    "correctAnswer": 2018
+  }
+}
