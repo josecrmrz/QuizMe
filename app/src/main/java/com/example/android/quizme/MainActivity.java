@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             LinearLayout main = findViewById(R.id.linear_layout_main);
+//            main.removeViewAt(0);
 
             // loop through each question that is Multiple Choice
             for (int i = 0; i < jsonMultipleChoiceQuestions.length(); i++) {
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 questions.add(multipleChoiceQuestion);
 
-                main.addView(getCardViewQuestion(QuestionType.MULTIPLE_CHOICE), i+1);
+                main.addView(getCardViewQuestion(QuestionType.MULTIPLE_CHOICE), i);
 
                 RadioGroup answersRadioGroup = findViewById(R.id.radio_group_answers);
 
@@ -136,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
 
         RadioButton radioButton = radioGroup.findViewById(radioButtonID);
 
+        if (radioButton == null) {
+            Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if ((boolean) radioButton.getTag()) {
             Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT).show();
         } else {
@@ -147,11 +153,11 @@ public class MainActivity extends AppCompatActivity {
         CardView cardView = new CardView(MainActivity.this);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
+
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(margin, margin, margin, margin);
 
         cardView.setLayoutParams(layoutParams);
-
         cardView.setRadius(2);
         cardView.setUseCompatPadding(true);
 
@@ -164,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout getLinearLayout(QuestionType questionType) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         TextView tvQuestion = getTextView();
         RadioGroup radioGroup = getRadioGroup(questionType);
 
@@ -189,10 +196,13 @@ public class MainActivity extends AppCompatActivity {
 
     private RadioGroup getRadioGroup(QuestionType questionType) {
         RadioGroup radioGroup = new RadioGroup(getApplicationContext());
+
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
 
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(margin, margin, margin, 0);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        layoutParams.setMargins(margin, margin, margin, margin);
+
+        radioGroup.setLayoutParams(layoutParams);
 
         switch (questionType){
             case INPUT:
@@ -240,12 +250,9 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton getRadioButton() {
         RadioButton rbAnswer = new RadioButton(getApplicationContext());
 
-        int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
         int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
 
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(margin, margin, margin, margin);
-        layoutParams.weight = 1;
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
 
         rbAnswer.setLayoutParams(layoutParams);
         rbAnswer.setPadding(padding, 0, padding, 0);
@@ -257,12 +264,9 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox getCheckBox() {
         CheckBox cbAnswer = new CheckBox(getApplicationContext());
 
-        int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
         int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
 
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(margin, margin, margin, margin);
-        layoutParams.weight = 1;
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
 
         cbAnswer.setLayoutParams(layoutParams);
         cbAnswer.setPadding(padding, 0, padding, 0);
@@ -273,9 +277,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText getEditBox() {
         EditText etAnswer = new EditText(getApplicationContext());
 
-        int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(margin, margin, margin, margin);
 
         etAnswer.setLayoutParams(layoutParams);
 
