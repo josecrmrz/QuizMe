@@ -1,29 +1,30 @@
 package com.example.android.quizme;
 
-/**
- * Created by joser on 2/20/18.
- */
+import android.support.v4.util.Pair;
+
+import java.util.ArrayList;
 
 public class TrueFalseQuestion {
-    private String question = null;
-    private Boolean answer = null;
+
+    private String _question = null;
+    private ArrayList<Pair<Boolean, String>> _answer = null;
 
     public TrueFalseQuestion() {
     }
 
     public String getQuestion() {
-        return question;
+        return _question;
     }
 
     public void setQuestion(String question) {
-        this.question = question;
+        _question = question;
     }
 
-    public Boolean getAnswer() {
-        return answer;
+    public ArrayList<Pair<Boolean, String>> getAnswer() {
+        return _answer;
     }
 
-    public void setAnswer(Boolean answers) {
-        this.answer = answers;
+    public void setAnswer(ArrayList<Pair<Boolean, String>> answers) {
+        _answer = answers;
     }
 }

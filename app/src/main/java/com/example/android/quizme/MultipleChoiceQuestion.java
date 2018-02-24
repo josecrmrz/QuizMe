@@ -4,30 +4,27 @@ import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 
-/**
- * Created by joser on 2/14/18.
- */
-
 public class MultipleChoiceQuestion {
-    private String question = null;
-    private ArrayList<Pair<Boolean, String>> answers = null;
+
+    private String _question = null;
+    private ArrayList<Pair<Boolean, String>> _answers = null;
 
     public MultipleChoiceQuestion() {
     }
 
     public String getQuestion() {
-        return question;
+        return _question;
     }
 
     public void setQuestion(String question) {
-        this.question = question;
+        _question = question;
     }
 
     public ArrayList<Pair<Boolean, String>> getAnswer() {
-        return answers;
+        return _answers;
     }
 
     public void setAnswers(ArrayList<Pair<Boolean, String>> answers) {
-        this.answers = answers;
+        _answers = answers;
     }
 }
