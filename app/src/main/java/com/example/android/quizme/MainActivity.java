@@ -1,6 +1,5 @@
 package com.example.android.quizme;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -23,11 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Object> questions = new ArrayList<>();
+    private ArrayList<Pair<Object, QuestionType>> questions = new ArrayList<>();
 
     private enum QuestionType {
         MULTIPLE_CHOICE,
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             LinearLayout main = findViewById(R.id.linear_layout_main);
-//            main.removeViewAt(0);
+            main.removeViewAt(0);
 
             // loop through each question that is Multiple Choice
             for (int i = 0; i < jsonMultipleChoiceQuestions.length(); i++) {
@@ -96,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
                 MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
                 multipleChoiceQuestion.setQuestion(jsonQuestionObject.getString("question"));
-//                TextView questionTextView = findViewById(R.id.text_view_question);
-//                questionTextView.setText(jsonQuestionObject.getString("question"));
 
                 ArrayList<Pair<Boolean, String>> answers = new ArrayList<>();
 
@@ -111,19 +107,17 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Collections.shuffle(answers);
-
                 multipleChoiceQuestion.setAnswers(answers);
 
-                questions.add(multipleChoiceQuestion);
+                questions.add(new Pair<Object, QuestionType>(multipleChoiceQuestion, QuestionType.MULTIPLE_CHOICE));
+            }
 
-                main.addView(getCardViewQuestion(QuestionType.MULTIPLE_CHOICE), i);
+            // shuffle the questions
+            Collections.shuffle(questions);
 
-                RadioGroup answersRadioGroup = findViewById(R.id.radio_group_answers);
-
-                for (int answer = 0; answer < answersRadioGroup.getChildCount(); answer++) {
-                    ((RadioButton) answersRadioGroup.getChildAt(answer)).setTag(answers.get(answer).first);
-                    ((RadioButton) answersRadioGroup.getChildAt(answer)).setText(answers.get(answer).second);
-                }
+            // create the questions to their appropriate card view layout
+            for (int q = 0; q < questions.size(); q++) {
+                main.addView(getCardViewQuestion(questions.get(q).first, QuestionType.MULTIPLE_CHOICE), q);
             }
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -131,48 +125,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(View v) {
-        RadioGroup radioGroup = findViewById(R.id.radio_group_answers);
+        LinearLayout linearLayout = findViewById(R.id.linear_layout_main);
 
-        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+        int score = 0;
 
-        RadioButton radioButton = radioGroup.findViewById(radioButtonID);
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
 
-        if (radioButton == null) {
-            Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
-            return;
+            if (!(linearLayout.getChildAt(i) instanceof CardView)) {
+                continue;
+            }
+
+            CardView cardView = (CardView) linearLayout.getChildAt(i);
+            LinearLayout linearLayout1 = (LinearLayout) cardView.getChildAt(0);
+            RadioGroup radioGroup = (RadioGroup) linearLayout1.getChildAt(1);
+
+            int answerId = radioGroup.getCheckedRadioButtonId();
+            RadioButton radioButtonAnswer = findViewById(answerId);
+            int idx = radioGroup.indexOfChild(radioButtonAnswer);
+
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(idx);
+
+            if (radioButton == null) {
+                Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if ((boolean) radioButton.getTag()) {
+                score += 10;
+            }
         }
 
-        if ((boolean) radioButton.getTag()) {
-            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getApplicationContext(), "Score is " + score, Toast.LENGTH_SHORT).show();
     }
 
-    private CardView getCardViewQuestion(QuestionType questionType) {
+    private CardView getCardViewQuestion(Object question, QuestionType questionType) {
         CardView cardView = new CardView(MainActivity.this);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
 
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(margin, margin, margin, margin);
+        layoutParams.setMargins(margin, margin, margin, 0);
 
         cardView.setLayoutParams(layoutParams);
         cardView.setRadius(2);
         cardView.setUseCompatPadding(true);
 
-        LinearLayout linearLayout = getLinearLayout(questionType);
+        LinearLayout linearLayout = getLinearLayout(question, questionType);
 
         cardView.addView(linearLayout);
 
         return cardView;
     }
 
-    private LinearLayout getLinearLayout(QuestionType questionType) {
+    private LinearLayout getLinearLayout(Object question, QuestionType questionType) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        TextView tvQuestion = getTextView();
-        RadioGroup radioGroup = getRadioGroup(questionType);
+
+        TextView tvQuestion = getTextView(question);
+        RadioGroup radioGroup = getRadioGroup(question, questionType);
 
         linearLayout.addView(tvQuestion);
         linearLayout.addView(radioGroup);
@@ -180,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         return linearLayout;
     }
 
-    private TextView getTextView() {
+    private TextView getTextView(Object question) {
         TextView tvQuestion = new TextView(getApplicationContext());
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
@@ -189,12 +199,12 @@ public class MainActivity extends AppCompatActivity {
         layoutParams.setMargins(margin, margin, margin, 0);
 
         tvQuestion.setLayoutParams(layoutParams);
-        tvQuestion.setText("Is this a question?");
+        tvQuestion.setText(MultipleChoiceQuestion.class.cast(question).getQuestion());
 
         return tvQuestion;
     }
 
-    private RadioGroup getRadioGroup(QuestionType questionType) {
+    private RadioGroup getRadioGroup(Object question, QuestionType questionType) {
         RadioGroup radioGroup = new RadioGroup(getApplicationContext());
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
@@ -204,15 +214,15 @@ public class MainActivity extends AppCompatActivity {
 
         radioGroup.setLayoutParams(layoutParams);
 
-        switch (questionType){
+        switch (questionType) {
             case INPUT:
                 EditText editText = getEditBox();
                 radioGroup.addView(editText);
 
                 break;
             case TRUE_FALSE:
-                RadioButton rbTrue = getRadioButton();
-                RadioButton rbFalse = getRadioButton();
+                RadioButton rbTrue = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(0));
+                RadioButton rbFalse = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(1));
 
                 radioGroup.addView(rbTrue);
                 radioGroup.addView(rbFalse);
@@ -231,10 +241,10 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case MULTIPLE_CHOICE:
-                RadioButton radioButton1 = getRadioButton();
-                RadioButton radioButton2 = getRadioButton();
-                RadioButton radioButton3 = getRadioButton();
-                RadioButton radioButton4 = getRadioButton();
+                RadioButton radioButton1 = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(0));
+                RadioButton radioButton2 = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(1));
+                RadioButton radioButton3 = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(2));
+                RadioButton radioButton4 = getRadioButton(MultipleChoiceQuestion.class.cast(question).getAnswer().get(3));
 
                 radioGroup.addView(radioButton1);
                 radioGroup.addView(radioButton2);
@@ -244,10 +254,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        return  radioGroup;
+        return radioGroup;
     }
 
-    private RadioButton getRadioButton() {
+    private RadioButton getRadioButton(Pair<Boolean, String> answer) {
         RadioButton rbAnswer = new RadioButton(getApplicationContext());
 
         int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
@@ -256,7 +266,8 @@ public class MainActivity extends AppCompatActivity {
 
         rbAnswer.setLayoutParams(layoutParams);
         rbAnswer.setPadding(padding, 0, padding, 0);
-        rbAnswer.setText("Answer 1");
+        rbAnswer.setTag(answer.first);
+        rbAnswer.setText(answer.second);
 
         return rbAnswer;
     }
@@ -271,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
         cbAnswer.setLayoutParams(layoutParams);
         cbAnswer.setPadding(padding, 0, padding, 0);
 
-        return  cbAnswer;
+        return cbAnswer;
     }
 
     private EditText getEditBox() {
@@ -281,6 +292,6 @@ public class MainActivity extends AppCompatActivity {
 
         etAnswer.setLayoutParams(layoutParams);
 
-        return  etAnswer;
+        return etAnswer;
     }
 }
