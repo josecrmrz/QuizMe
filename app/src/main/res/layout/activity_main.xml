@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
@@ -18,7 +18,9 @@
             android:id="@+id/card_view_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
             card_view:cardCornerRadius="2dp"
             card_view:cardUseCompatPadding="true">
 
@@ -90,9 +92,11 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
             android:background="@drawable/rounded_button"
             android:onClick="checkAnswer"
             android:text="Submit" />
 
     </LinearLayout>
+
 </ScrollView>
