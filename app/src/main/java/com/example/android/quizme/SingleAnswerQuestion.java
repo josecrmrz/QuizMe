@@ -4,12 +4,12 @@ import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 
-public class MultipleChoiceQuestion {
+public class SingleAnswerQuestion extends QuestionBase {
 
     private String _question = null;
     private ArrayList<Pair<Boolean, String>> _answers = null;
 
-    public MultipleChoiceQuestion() {
+    public SingleAnswerQuestion() {
     }
 
     public String getQuestion() {
