@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity extends AppCompatActivity {
 
     private ArrayList<Pair<Object, QuestionBase.QuestionType>> questions = new ArrayList<>();
 
@@ -68,13 +68,23 @@ public class MainActivity extends AppCompatActivity {
                     score += 10;
                 }
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
-                CheckBox checkBox = null;
+                CheckBox checkBox;
+                boolean isCorrect = true;   // assume correct answers
+                Log.v("TEST child count", String.valueOf(radioGroup.getChildCount()));
                 for (int c = 0; c < radioGroup.getChildCount(); c++) {
-                    checkBox = (CheckBox) radioGroup.getChildAt(i);
-                    // TODO: Figure out how to check each checkbox
+                    checkBox = (CheckBox) radioGroup.getChildAt(c);
+
+                    /* incorrect answer if did not select a correct answer OR selected an incorrect answer */
+                    if ((checkBox.isChecked() && !(boolean) checkBox.getTag()) ||
+                            (!checkBox.isChecked() && (boolean) checkBox.getTag())) {
+                        isCorrect = false;
+                    }
                 }
-            }
-            else if (radioGroup.getChildAt(0) instanceof EditText) {
+
+                if (isCorrect) {
+                    score += 1;
+                }
+            } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
                 if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString())) {
@@ -129,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Loads the questions.json file to be read
      *
-     * @return String buffer
+     * @return json String
      */
     private String loadJSONQuestions() {
         String json = null;
@@ -189,8 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (questionType == QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION) {
                         singleAnswerQuestion.setQuestionType(QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-                    }
-                    else if (questionType == QuestionBase.QuestionType.MULTIPLE_ANSWER) {
+                    } else if (questionType == QuestionBase.QuestionType.MULTIPLE_ANSWER) {
                         singleAnswerQuestion.setQuestionType(QuestionBase.QuestionType.MULTIPLE_ANSWER);
                     }
 
