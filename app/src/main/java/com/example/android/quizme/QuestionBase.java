@@ -1,7 +1,9 @@
 package com.example.android.quizme;
 
-public class QuestionBase {
-    QuestionType _questionType = QuestionType.SINGLE_ANSWER_QUESTION;
+abstract class QuestionBase {
+
+    private QuestionType _questionType = QuestionType.SINGLE_ANSWER_QUESTION;
+    private String _question = null;
 
     public enum QuestionType {
         SINGLE_ANSWER_QUESTION,
@@ -9,14 +11,22 @@ public class QuestionBase {
         TEXT_INPUT
     }
 
-    public QuestionBase() {
+    QuestionBase() {
     }
 
-    protected QuestionType getQuestionType() {
+    QuestionType getQuestionType() {
         return _questionType;
     }
 
-    protected void setQuestionType(QuestionType questionType) {
+    void setQuestionType(QuestionType questionType) {
         _questionType = questionType;
+    }
+
+    String getQuestion() {
+        return _question;
+    }
+
+    void setQuestion(String question) {
+        _question = question;
     }
 }
