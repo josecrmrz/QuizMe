@@ -84,7 +84,7 @@
   "textInput": [
     {
       "question": "What year is it?",
-      "correctAnswer": "2018"
+      "answer": "2018"
     }
   ]
 }

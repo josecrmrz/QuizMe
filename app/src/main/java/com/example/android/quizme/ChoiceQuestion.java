@@ -4,11 +4,11 @@ import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 
-class SingleAnswerQuestion extends QuestionBase {
+class ChoiceQuestion extends QuestionBase {
 
     private ArrayList<Pair<Boolean, String>> _answers = null;
 
-    SingleAnswerQuestion() {
+    ChoiceQuestion() {
     }
 
     ArrayList<Pair<Boolean, String>> getAnswer() {
