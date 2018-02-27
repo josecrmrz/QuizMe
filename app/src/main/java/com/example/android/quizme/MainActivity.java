@@ -32,34 +32,30 @@ class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setQuestions();
+        reloadQuestions();
     }
 
-    /**
-     * Create questions by reading a json file
-     */
-    private void setQuestions() {
+    /* Load the questions to be answered */
+    private void reloadQuestions() {
         LinearLayout linearLayoutMain = findViewById(R.id.linear_layout_main);
 
-        // clear existing CardViews
         clearCardViews(linearLayoutMain);
-
-        // create the question objects: TextInputQuestion or ChoiceQuestion
         createQuestionObjects();
-
-        // create the appropriate card views for each question type
         createCardViews(linearLayoutMain);
     }
 
+    /* Cleat any existing Card Views */
     private void clearCardViews(LinearLayout linearLayout) {
         while (linearLayout.getChildAt(0) instanceof CardView) {
             linearLayout.removeViewAt(0);
         }
     }
 
+    /* Create the question objects ChoiceQuestion or TextInputQuestion  */
     private void createQuestionObjects() {
         try {
             JSONObject jsonObject = new JSONObject(loadJSONQuestions());
+
             JSONArray jsonMultipleChoiceQuestions = jsonObject.getJSONArray("multipleChoice");
             JSONArray jsonMultipleAnswerQuestions = jsonObject.getJSONArray("multipleAnswer");
             JSONArray jsonTrueFalseQuestions = jsonObject.getJSONArray("boolean");
@@ -87,10 +83,12 @@ class MainActivity extends AppCompatActivity {
             int size = inputStream.available();
             byte[] buffer = new byte[size];
 
-            inputStream.read(buffer);
+            int numberOfBytes = inputStream.read(buffer);
             inputStream.close();
 
-            json = new String(buffer, "UTF-8");
+            if (numberOfBytes > -1) {
+                json = new String(buffer, "UTF-8");
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -98,6 +96,7 @@ class MainActivity extends AppCompatActivity {
         return json;
     }
 
+    /* Create the question objects and store them in an Array List to be shuffled */
     private void createQuestions(JSONArray jsonArrayQuestion, QuestionBase.QuestionType questionType) {
         try {
             // loop through each question in the JSON array of questions
@@ -140,7 +139,7 @@ class MainActivity extends AppCompatActivity {
                         choiceQuestion.setQuestionType(QuestionBase.QuestionType.MULTIPLE_ANSWER);
                     }
 
-                    // add the question to the list of questions
+                    // add the question to the array list of questions
                     questions.add(new Pair<Object, QuestionBase.QuestionType>(choiceQuestion, questionType));
                 }
 
@@ -150,6 +149,8 @@ class MainActivity extends AppCompatActivity {
         }
     }
 
+    /* Create the correct Card Views for each type of
+     * question to be added to the Main Activity layout */
     private void createCardViews(LinearLayout linearLayoutMain) {
         for (int q = 0; q < questions.size(); q++) {
             if (questions.get(q).first instanceof ChoiceQuestion &&
@@ -164,6 +165,7 @@ class MainActivity extends AppCompatActivity {
         }
     }
 
+    /* Returns the Card View with the question and answers */
     private CardView getCardViewQuestion(Object question, QuestionBase.QuestionType questionType) {
         CardView cardView = new CardView(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -182,6 +184,8 @@ class MainActivity extends AppCompatActivity {
         return cardView;
     }
 
+    /* This will return the Linear Layout with the question and
+     * answers to be added inside a Card View */
     private LinearLayout getLinearLayout(Object question, QuestionBase.QuestionType questionType) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         TextView tvQuestion = getTextView(question, questionType);
@@ -194,6 +198,8 @@ class MainActivity extends AppCompatActivity {
         return linearLayout;
     }
 
+    /* This will return the Text View of the Question to be added
+     * inside the Linear Layout of the CardView */
     private TextView getTextView(Object question, QuestionBase.QuestionType questionType) {
         TextView tvQuestion = new TextView(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -217,6 +223,8 @@ class MainActivity extends AppCompatActivity {
         return tvQuestion;
     }
 
+    /* This will return the Radio Group to be added inside a Linear Layout.
+     * NOTE: This will be the default grouping of answers to make checking answers easier */
     private RadioGroup getRadioGroup(Object question, QuestionBase.QuestionType questionType) {
         RadioGroup radioGroup = new RadioGroup(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -255,6 +263,7 @@ class MainActivity extends AppCompatActivity {
         return radioGroup;
     }
 
+    /* This will return the Radio Button to be added inside a Radio Group */
     private RadioButton getRadioButtonAnswer(Pair<Boolean, String> answer) {
         RadioButton radioButton = new RadioButton(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
@@ -269,6 +278,7 @@ class MainActivity extends AppCompatActivity {
         return radioButton;
     }
 
+    /* This will return the CheckBox to be added inside a Radio Group */
     private CheckBox getCheckBoxAnswer(Pair<Boolean, String> answer) {
         CheckBox checkBox = new CheckBox(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
@@ -283,6 +293,7 @@ class MainActivity extends AppCompatActivity {
         return checkBox;
     }
 
+    /* This will return the Edit Text to be added inside a Radio Group */
     private EditText getEditBoxAnswer(String answer) {
         EditText editText = new EditText(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -294,6 +305,7 @@ class MainActivity extends AppCompatActivity {
         return editText;
     }
 
+    /* Check the answers and display the score in a custom Toast message */
     public void checkAnswer(View v) {
         LinearLayout linearLayout = findViewById(R.id.linear_layout_main);
 
