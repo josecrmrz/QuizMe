@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,18 +15,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 
 class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Pair<Object, QuestionBase.QuestionType>> questions = new ArrayList<>();
+    private Questions questions = null;
+
+    private static final int EDIT_TEXT_SCORE = 10;
+    private static final int RADIO_BUTTON_SCORE = 10;
+    private static final int CHECK_BOX_SCORE = 10;
+
+    // TODO: Handle device rotation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ class MainActivity extends AppCompatActivity {
         createCardViews(linearLayoutMain);
     }
 
-    /* Cleat any existing Card Views */
+    /* Clear any existing Card Views */
     private void clearCardViews(LinearLayout linearLayout) {
         while (linearLayout.getChildAt(0) instanceof CardView) {
             linearLayout.removeViewAt(0);
@@ -56,18 +60,8 @@ class MainActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(loadJSONQuestions());
 
-            JSONArray jsonMultipleChoiceQuestions = jsonObject.getJSONArray("multipleChoice");
-            JSONArray jsonMultipleAnswerQuestions = jsonObject.getJSONArray("multipleAnswer");
-            JSONArray jsonTrueFalseQuestions = jsonObject.getJSONArray("boolean");
-            JSONArray jsonTextInputQuestions = jsonObject.getJSONArray("textInput");
+            questions = new Questions(jsonObject);
 
-            createQuestions(jsonMultipleChoiceQuestions, QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-            createQuestions(jsonMultipleAnswerQuestions, QuestionBase.QuestionType.MULTIPLE_ANSWER);
-            createQuestions(jsonTrueFalseQuestions, QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-            createQuestions(jsonTextInputQuestions, QuestionBase.QuestionType.TEXT_INPUT);
-
-            // shuffle the questions
-            Collections.shuffle(questions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -96,80 +90,23 @@ class MainActivity extends AppCompatActivity {
         return json;
     }
 
-    /* Create the question objects and store them in an Array List to be shuffled */
-    private void createQuestions(JSONArray jsonArrayQuestion, QuestionBase.QuestionType questionType) {
-        try {
-            // loop through each question in the JSON array of questions
-            for (int i = 0; i < jsonArrayQuestion.length(); i++) {
-                JSONObject jsonQuestionObject = jsonArrayQuestion.getJSONObject(i);
-
-                if (questionType == QuestionBase.QuestionType.TEXT_INPUT) {
-                    TextInputQuestion textInputQuestion = new TextInputQuestion();
-                    textInputQuestion.setQuestion(jsonQuestionObject.getString("question"));
-                    textInputQuestion.setAnswer(jsonQuestionObject.getString("answer"));
-
-                    questions.add(new Pair<Object, QuestionBase.QuestionType>(textInputQuestion, QuestionBase.QuestionType.TEXT_INPUT));
-                } else {
-                    ArrayList<Pair<Boolean, String>> answers = new ArrayList<>();
-                    JSONArray jsonAnswersArray = jsonQuestionObject.getJSONArray("answers");
-                    ChoiceQuestion choiceQuestion = new ChoiceQuestion();
-                    choiceQuestion.setQuestion(jsonQuestionObject.getString("question"));
-
-                    // create a Pair for the answers for the ChoiceQuestion object
-                    for (int answerIndex = 0; answerIndex < jsonAnswersArray.length(); answerIndex++) {
-                        Boolean isCorrectAnswer = jsonAnswersArray.getJSONArray(answerIndex).getBoolean(0);
-                        String answerString = jsonAnswersArray.getJSONArray(answerIndex).getString(1);
-
-                        // adding to Array List to shuffle the answers
-                        answers.add(new Pair<>(isCorrectAnswer, answerString));
-                    }
-
-                    // only shuffle the answers if there is more than 2 options
-                    if (answers.size() > 2) {
-                        Collections.shuffle(answers);
-                    }
-
-                    // set the answers to the ChoiceQuestion object
-                    choiceQuestion.setAnswers(answers);
-
-                    // Set the appropriate question type
-                    if (questionType == QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION) {
-                        choiceQuestion.setQuestionType(QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-                    } else if (questionType == QuestionBase.QuestionType.MULTIPLE_ANSWER) {
-                        choiceQuestion.setQuestionType(QuestionBase.QuestionType.MULTIPLE_ANSWER);
-                    }
-
-                    // add the question to the array list of questions
-                    questions.add(new Pair<Object, QuestionBase.QuestionType>(choiceQuestion, questionType));
-                }
-
-            }
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     /* Create the correct Card Views for each type of
      * question to be added to the Main Activity layout */
     private void createCardViews(LinearLayout linearLayoutMain) {
-        for (int q = 0; q < questions.size(); q++) {
-            if (questions.get(q).first instanceof ChoiceQuestion &&
-                    ChoiceQuestion.class.cast(questions.get(q).first).getQuestionType() == QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION) {
-                linearLayoutMain.addView(getCardViewQuestion(questions.get(q).first, QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION), q);
-            } else if (questions.get(q).first instanceof ChoiceQuestion &&
-                    ChoiceQuestion.class.cast(questions.get(q).first).getQuestionType() == QuestionBase.QuestionType.MULTIPLE_ANSWER) {
-                linearLayoutMain.addView(getCardViewQuestion(questions.get(q).first, QuestionBase.QuestionType.MULTIPLE_ANSWER), q);
-            } else if (questions.get(q).first instanceof TextInputQuestion) {
-                linearLayoutMain.addView(getCardViewQuestion(questions.get(q).first, QuestionBase.QuestionType.TEXT_INPUT), q);
+        for (int q = 0; q < questions.getQuestions().size(); q++) {
+            if (questions.getQuestions().get(q) instanceof ChoiceQuestion) {
+                linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
+            } else if (questions.getQuestions().get(q) instanceof TextInputQuestion) {
+                linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
             }
         }
     }
 
     /* Returns the Card View with the question and answers */
-    private CardView getCardViewQuestion(Object question, QuestionBase.QuestionType questionType) {
+    private CardView getCardViewQuestion(Object question) {
         CardView cardView = new CardView(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        LinearLayout linearLayout = getLinearLayout(question, questionType);
+        LinearLayout linearLayout = getLinearLayout(question);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
 
@@ -186,12 +123,14 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Linear Layout with the question and
      * answers to be added inside a Card View */
-    private LinearLayout getLinearLayout(Object question, QuestionBase.QuestionType questionType) {
+    private LinearLayout getLinearLayout(Object question) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        TextView tvQuestion = getTextView(question, questionType);
-        RadioGroup radioGroup = getRadioGroup(question, questionType);
+        TextView tvQuestion = getTextView(question);
+        RadioGroup radioGroup = getRadioGroup(question);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setFocusable(true);
+        linearLayout.setFocusableInTouchMode(true);
         linearLayout.addView(tvQuestion);
         linearLayout.addView(radioGroup);
 
@@ -200,7 +139,7 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Text View of the Question to be added
      * inside the Linear Layout of the CardView */
-    private TextView getTextView(Object question, QuestionBase.QuestionType questionType) {
+    private TextView getTextView(Object question) {
         TextView tvQuestion = new TextView(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -210,14 +149,10 @@ class MainActivity extends AppCompatActivity {
 
         tvQuestion.setLayoutParams(layoutParams);
 
-        switch (questionType) {
-            case TEXT_INPUT:
-                tvQuestion.setText(TextInputQuestion.class.cast(question).getQuestion());
-                break;
-            case SINGLE_ANSWER_QUESTION:
-            case MULTIPLE_ANSWER:
-                tvQuestion.setText(ChoiceQuestion.class.cast(question).getQuestion());
-                break;
+        if (question instanceof TextInputQuestion) {
+            tvQuestion.setText(TextInputQuestion.class.cast(question).getQuestion());
+        } else {
+            tvQuestion.setText(ChoiceQuestion.class.cast(question).getQuestion());
         }
 
         return tvQuestion;
@@ -225,7 +160,7 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Radio Group to be added inside a Linear Layout.
      * NOTE: This will be the default grouping of answers to make checking answers easier */
-    private RadioGroup getRadioGroup(Object question, QuestionBase.QuestionType questionType) {
+    private RadioGroup getRadioGroup(Object question) {
         RadioGroup radioGroup = new RadioGroup(getApplicationContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -235,29 +170,19 @@ class MainActivity extends AppCompatActivity {
 
         radioGroup.setLayoutParams(layoutParams);
 
-        switch (questionType) {
-            case TEXT_INPUT:
-                EditText editText = getEditBoxAnswer(TextInputQuestion.class.cast(question).getAnswer());
-
-                radioGroup.setFocusableInTouchMode(true);
-                radioGroup.setFocusable(true);
-                radioGroup.addView(editText);
-
-                break;
-            case SINGLE_ANSWER_QUESTION:
-                for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
-                    RadioButton radioButton = getRadioButtonAnswer(ChoiceQuestion.class.cast(question).getAnswer().get(i));
-                    radioGroup.addView(radioButton);
-                }
-
-                break;
-            case MULTIPLE_ANSWER:
-                for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
-                    CheckBox checkBox = getCheckBoxAnswer(ChoiceQuestion.class.cast(question).getAnswer().get(i));
-                    radioGroup.addView(checkBox);
-                }
-
-                break;
+        if (question instanceof TextInputQuestion) {
+            EditText editText = getEditBoxAnswer(TextInputQuestion.class.cast(question).getAnswer());
+            radioGroup.addView(editText);
+        } else if (((ChoiceQuestion) question).isSingleAnswerQuestion()) {
+            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
+                RadioButton radioButton = getRadioButtonAnswer(((ChoiceQuestion) question).getAnswer().get(i));
+                radioGroup.addView(radioButton);
+            }
+        } else if (((ChoiceQuestion) question).isMultipleAnswerQuestion()) {
+            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
+                CheckBox checkBox = getCheckBoxAnswer(((ChoiceQuestion) question).getAnswer().get(i));
+                radioGroup.addView(checkBox);
+            }
         }
 
         return radioGroup;
@@ -299,6 +224,7 @@ class MainActivity extends AppCompatActivity {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         editText.setLayoutParams(layoutParams);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
         editText.setHint("Enter your answer");
         editText.setTag(answer);
 
@@ -325,16 +251,18 @@ class MainActivity extends AppCompatActivity {
                 RadioButton radioButtonAnswer = findViewById(radioGroup.getCheckedRadioButtonId());
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioGroup.indexOfChild(radioButtonAnswer));
 
-                // This indicates that not
+                // This indicates that the question was not answered
                 if (radioButton == null) {
                     Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // if the checked answers tag value is true
                 if ((boolean) radioButton.getTag()) {
-                    score += 10;
+                    score += RADIO_BUTTON_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
+
                 boolean isCorrect = true;   // assume correct answers
 
                 for (int c = 0; c < radioGroup.getChildCount(); c++) {
@@ -349,17 +277,19 @@ class MainActivity extends AppCompatActivity {
                 }
 
                 if (isCorrect) {
-                    score += 1;
+                    score += CHECK_BOX_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
-                if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString())) {
-                    score += 15;
+                // Check if the answer stored in the tag matches the entered answer
+                if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString().trim())) {
+                    score += EDIT_TEXT_SCORE;
                 }
             }
         }
 
+        // TODO: Show correct/total questions answered correctly
         Toast.makeText(getApplicationContext(), "Score is " + score, Toast.LENGTH_SHORT).show();
     }
 }

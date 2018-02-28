@@ -233,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:hint="Answer here"
+                        android:hint="@string/answer_hint"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding" />
@@ -254,7 +254,7 @@
             android:translationZ="@dimen/elevation"
             android:background="@drawable/rounded_button"
             android:onClick="checkAnswer"
-            android:text="Submit" />
+            android:text="@string/submit" />
 
     </LinearLayout>
 

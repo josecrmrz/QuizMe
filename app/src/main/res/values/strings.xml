@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Quiz Me</string>
+    <string name="answer_hint">Answer here</string>
+    <string name="submit">Submit</string>
 </resources>

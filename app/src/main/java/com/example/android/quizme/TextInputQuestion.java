@@ -4,7 +4,10 @@ class TextInputQuestion extends QuestionBase {
 
     private String _answer = null;
 
-    TextInputQuestion() {
+    TextInputQuestion(String question, String answer, QuestionType questionType) {
+        _question = question;
+        _answer = answer;
+        _questionType = questionType;
     }
 
     String getAnswer() {

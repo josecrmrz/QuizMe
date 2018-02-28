@@ -2,13 +2,13 @@ package com.example.android.quizme;
 
 abstract class QuestionBase {
 
-    private QuestionType _questionType = QuestionType.SINGLE_ANSWER_QUESTION;
-    private String _question = null;
+    QuestionType _questionType = QuestionType.SINGLE_ANSWER_QUESTION;
+    String _question = null;
 
     public enum QuestionType {
         SINGLE_ANSWER_QUESTION,
-        MULTIPLE_ANSWER,
-        TEXT_INPUT
+        MULTIPLE_ANSWER_QUESTION,
+        TEXT_INPUT_QUESTION
     }
 
     QuestionBase() {
@@ -28,5 +28,17 @@ abstract class QuestionBase {
 
     void setQuestion(String question) {
         _question = question;
+    }
+
+    boolean isSingleAnswerQuestion() {
+        return _questionType == QuestionType.SINGLE_ANSWER_QUESTION;
+    }
+
+    boolean isMultipleAnswerQuestion() {
+        return _questionType == QuestionType.MULTIPLE_ANSWER_QUESTION;
+    }
+
+    boolean isTextInputQuestion() {
+        return _questionType == QuestionType.TEXT_INPUT_QUESTION;
     }
 }
