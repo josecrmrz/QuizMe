@@ -15,11 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
 
 class MainActivity extends AppCompatActivity {
 
@@ -44,7 +40,7 @@ class MainActivity extends AppCompatActivity {
         LinearLayout linearLayoutMain = findViewById(R.id.linear_layout_main);
 
         clearCardViews(linearLayoutMain);
-        createQuestionObjects();
+        loadQuestions();
         createCardViews(linearLayoutMain);
     }
 
@@ -55,39 +51,14 @@ class MainActivity extends AppCompatActivity {
         }
     }
 
-    /* Create the question objects ChoiceQuestion or TextInputQuestion  */
-    private void createQuestionObjects() {
+    /* Create the Questions object containing the list of Questions
+      * by passing in the questions.json file */
+    private void loadQuestions() {
         try {
-            JSONObject jsonObject = new JSONObject(loadJSONQuestions());
-
-            questions = new Questions(jsonObject);
-
-        } catch (JSONException e) {
+            questions = new Questions(getAssets().open("questions.json"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /*Load the questions JSON file*/
-    private String loadJSONQuestions() {
-        String json = null;
-
-        try {
-            InputStream inputStream = getAssets().open("questions.json");
-
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-
-            int numberOfBytes = inputStream.read(buffer);
-            inputStream.close();
-
-            if (numberOfBytes > -1) {
-                json = new String(buffer, "UTF-8");
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return json;
     }
 
     /* Create the correct Card Views for each type of

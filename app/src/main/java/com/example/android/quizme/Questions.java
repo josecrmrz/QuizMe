@@ -13,16 +13,23 @@ import java.util.Collections;
 
 class Questions {
 
-    private ArrayList<Object> questions = new ArrayList<>();
+    private ArrayList<Object> mQuestions = new ArrayList<>();
 
-    Questions(JSONObject jsonQuestionsFile) {
-            createQuestionObjects(jsonQuestionsFile);
+    Questions(InputStream jsonQuestionsFile) {
+        try {
+            createQuestionObjects(new JSONObject(getJSONQuestions(jsonQuestionsFile)));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
+    /* Return the Array list of Questions */
     ArrayList<Object> getQuestions() {
-        return questions;
+        return mQuestions;
     }
 
+    /* Create the Question objects ChoiceQuestion or TextInputQuestion */
     private void createQuestionObjects(JSONObject jsonQuestions) {
         try {
             JSONArray jsonMultipleChoiceQuestions = jsonQuestions.getJSONArray("multipleChoice");
@@ -36,13 +43,14 @@ class Questions {
             createQuestions(jsonTextInputQuestions, QuestionBase.QuestionType.TEXT_INPUT_QUESTION);
 
             // shuffle the mQuestions
-            Collections.shuffle(questions);
+            Collections.shuffle(mQuestions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private String loadJSONQuestions(InputStream jsonQuestionsFile) {
+    /* Get the JSON String from the questions.json file */
+    private String getJSONQuestions(InputStream jsonQuestionsFile) {
         String json = null;
 
         try {
@@ -65,7 +73,7 @@ class Questions {
     /* Create the question objects and store them in an Array List to be shuffled */
     private void createQuestions(JSONArray jsonArrayQuestion, QuestionBase.QuestionType questionType) {
         try {
-            // loop through each question in the JSON array of mQuestions
+            // loop through each question in the JSON array of questions
             for (int i = 0; i < jsonArrayQuestion.length(); i++) {
                 JSONObject jsonQuestionObject = jsonArrayQuestion.getJSONObject(i);
 
@@ -75,7 +83,7 @@ class Questions {
 
                     TextInputQuestion textInputQuestion = new TextInputQuestion(question, answer, questionType);
 
-                    questions.add(textInputQuestion);
+                    mQuestions.add(textInputQuestion);
                 } else {
                     ArrayList<Pair<Boolean, String>> answers = new ArrayList<>();
 
@@ -99,7 +107,7 @@ class Questions {
                     ChoiceQuestion choiceQuestion = new ChoiceQuestion(question, answers, questionType);
 
                     // add the question to the array list of mQuestions
-                    questions.add(choiceQuestion);
+                    mQuestions.add(choiceQuestion);
                 }
             }
         } catch (JSONException ex) {
