@@ -96,14 +96,12 @@ class MainActivity extends AppCompatActivity {
      * answers to be added inside a Card View */
     private LinearLayout getLinearLayout(Object question) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        TextView tvQuestion = getTextView(question);
-        RadioGroup radioGroup = getRadioGroup(question);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setFocusable(true);
         linearLayout.setFocusableInTouchMode(true);
-        linearLayout.addView(tvQuestion);
-        linearLayout.addView(radioGroup);
+        linearLayout.addView(getTextView(question));
+        linearLayout.addView(getRadioGroup(question));
 
         return linearLayout;
     }
