@@ -6,15 +6,15 @@ import java.util.ArrayList;
 
 class ChoiceQuestion extends QuestionBase {
 
-    private ArrayList<Pair<Boolean, String>> _answers = null;
+    private ArrayList<Pair<Boolean, String>> mAnswers = null;
 
     ChoiceQuestion(String question, ArrayList<Pair<Boolean, String>> answers, @QuestionType int questionType) {
         mQuestion = question;
-        _answers = answers;
+        mAnswers = answers;
         mQuestionType = questionType;
     }
 
     ArrayList<Pair<Boolean, String>> getAnswer() {
-        return _answers;
+        return mAnswers;
     }
 }

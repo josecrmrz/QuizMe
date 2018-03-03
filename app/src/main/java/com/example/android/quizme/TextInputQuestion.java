@@ -2,15 +2,15 @@ package com.example.android.quizme;
 
 class TextInputQuestion extends QuestionBase {
 
-    private String _answer = null;
+    private String mAnswer = null;
 
     TextInputQuestion(String question, String answer, @QuestionType int questionType) {
         mQuestion = question;
-        _answer = answer;
+        mAnswer = answer;
         mQuestionType = questionType;
     }
 
     String getAnswer() {
-        return _answer;
+        return mAnswer;
     }
 }
