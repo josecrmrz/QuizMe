@@ -41,7 +41,7 @@ class Questions {
             createQuestions(jsonTrueFalseQuestions, QuestionBase.SINGLE_ANSWER_QUESTION);
             createQuestions(jsonTextInputQuestions, QuestionBase.TEXT_INPUT_QUESTION);
 
-            // shuffle the mQuestions
+            // shuffle the questions
             Collections.shuffle(mQuestions);
         } catch (JSONException e) {
             e.printStackTrace();

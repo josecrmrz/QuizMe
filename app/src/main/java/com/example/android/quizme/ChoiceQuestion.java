@@ -14,7 +14,7 @@ class ChoiceQuestion extends QuestionBase {
         mQuestionType = questionType;
     }
 
-    ArrayList<Pair<Boolean, String>> getAnswer() {
+    ArrayList<Pair<Boolean, String>> getAnswers() {
         return mAnswers;
     }
 }

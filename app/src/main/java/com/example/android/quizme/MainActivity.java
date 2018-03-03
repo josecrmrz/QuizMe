@@ -143,13 +143,13 @@ class MainActivity extends AppCompatActivity {
             EditText editText = getEditBoxAnswer(TextInputQuestion.class.cast(question).getAnswer());
             radioGroup.addView(editText);
         } else if (((ChoiceQuestion) question).isSingleAnswerQuestion()) {
-            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
-                RadioButton radioButton = getRadioButtonAnswer(((ChoiceQuestion) question).getAnswer().get(i));
+            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswers().size(); i++) {
+                RadioButton radioButton = getRadioButtonAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(radioButton);
             }
         } else if (((ChoiceQuestion) question).isMultipleAnswerQuestion()) {
-            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswer().size(); i++) {
-                CheckBox checkBox = getCheckBoxAnswer(((ChoiceQuestion) question).getAnswer().get(i));
+            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswers().size(); i++) {
+                CheckBox checkBox = getCheckBoxAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(checkBox);
             }
         }
