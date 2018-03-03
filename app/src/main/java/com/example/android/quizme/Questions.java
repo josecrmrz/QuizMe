@@ -18,8 +18,7 @@ class Questions {
     Questions(InputStream jsonQuestionsFile) {
         try {
             createQuestionObjects(new JSONObject(getJSONQuestions(jsonQuestionsFile)));
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -37,10 +36,10 @@ class Questions {
             JSONArray jsonTrueFalseQuestions = jsonQuestions.getJSONArray("boolean");
             JSONArray jsonTextInputQuestions = jsonQuestions.getJSONArray("textInput");
 
-            createQuestions(jsonMultipleChoiceQuestions, QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-            createQuestions(jsonMultipleAnswerQuestions, QuestionBase.QuestionType.MULTIPLE_ANSWER_QUESTION);
-            createQuestions(jsonTrueFalseQuestions, QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION);
-            createQuestions(jsonTextInputQuestions, QuestionBase.QuestionType.TEXT_INPUT_QUESTION);
+            createQuestions(jsonMultipleChoiceQuestions, QuestionBase.SINGLE_ANSWER_QUESTION);
+            createQuestions(jsonMultipleAnswerQuestions, QuestionBase.MULTIPLE_ANSWER_QUESTION);
+            createQuestions(jsonTrueFalseQuestions, QuestionBase.SINGLE_ANSWER_QUESTION);
+            createQuestions(jsonTextInputQuestions, QuestionBase.TEXT_INPUT_QUESTION);
 
             // shuffle the mQuestions
             Collections.shuffle(mQuestions);
@@ -71,13 +70,13 @@ class Questions {
     }
 
     /* Create the question objects and store them in an Array List to be shuffled */
-    private void createQuestions(JSONArray jsonArrayQuestion, QuestionBase.QuestionType questionType) {
+    private void createQuestions(JSONArray jsonArrayQuestion, int questionType) {
         try {
             // loop through each question in the JSON array of questions
             for (int i = 0; i < jsonArrayQuestion.length(); i++) {
                 JSONObject jsonQuestionObject = jsonArrayQuestion.getJSONObject(i);
 
-                if (questionType == QuestionBase.QuestionType.TEXT_INPUT_QUESTION) {
+                if (questionType == QuestionBase.TEXT_INPUT_QUESTION) {
                     String question = jsonQuestionObject.getString("question");
                     String answer = jsonQuestionObject.getString("answer");
 

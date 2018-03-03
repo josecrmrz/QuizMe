@@ -220,8 +220,8 @@ class MainActivity extends AppCompatActivity {
                 RadioButton radioButtonAnswer = findViewById(radioGroup.getCheckedRadioButtonId());
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioGroup.indexOfChild(radioButtonAnswer));
 
-                // This indicates that the question was not answered
-                if (radioButton == null) {
+                // This indicates that a question was not answered
+                if (!questionIsAnswered(radioButton)) {
                     Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -231,17 +231,23 @@ class MainActivity extends AppCompatActivity {
                     score += RADIO_BUTTON_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
-
                 boolean isCorrect = true;   // assume correct answers
+
+                if (!questionIsAnswered(radioGroup)) {
+                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 for (int c = 0; c < radioGroup.getChildCount(); c++) {
                     CheckBox checkBox = (CheckBox) radioGroup.getChildAt(c);
 
-                    /* incorrect answer if did not select a correct answer OR
+                    /* incorrect answer if user did not select a correct answer OR
                     selected an incorrect answer */
                     if ((checkBox.isChecked() && !(boolean) checkBox.getTag()) ||
                             (!checkBox.isChecked() && (boolean) checkBox.getTag())) {
                         isCorrect = false;
+
+                        break;
                     }
                 }
 
@@ -250,6 +256,11 @@ class MainActivity extends AppCompatActivity {
                 }
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
+
+                if (!questionIsAnswered(editText)) {
+                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // Check if the answer stored in the tag matches the entered answer
                 if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString().trim())) {
@@ -260,5 +271,31 @@ class MainActivity extends AppCompatActivity {
 
         // TODO: Show correct/total questions answered correctly
         Toast.makeText(getApplicationContext(), "Score is " + score, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean questionIsAnswered(RadioButton radioButton) {
+        return radioButton != null;
+    }
+
+    private boolean questionIsAnswered(EditText editText) {
+        return !editText.getText().toString().isEmpty();
+    }
+
+    private boolean questionIsAnswered(RadioGroup radioGroup) {
+        boolean isAnswered = false;
+
+        // Validate user answered the question
+        for (int c = 0; c < radioGroup.getChildCount(); c++) {
+            CheckBox checkBox = (CheckBox) radioGroup.getChildAt(c);
+
+            // Exit loop on first checkbox that was check
+            if (checkBox.isChecked()) {
+                isAnswered = true;
+
+                break;
+            }
+        }
+
+        return isAnswered;
     }
 }

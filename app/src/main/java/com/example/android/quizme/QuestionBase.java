@@ -1,44 +1,37 @@
 package com.example.android.quizme;
 
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 abstract class QuestionBase {
 
-    QuestionType _questionType = QuestionType.SINGLE_ANSWER_QUESTION;
-    String _question = null;
+    String mQuestion = null;
+    @QuestionType int mQuestionType;
 
-    public enum QuestionType {
-        SINGLE_ANSWER_QUESTION,
-        MULTIPLE_ANSWER_QUESTION,
-        TEXT_INPUT_QUESTION
-    }
+    static final int SINGLE_ANSWER_QUESTION = 0;
+    static final int MULTIPLE_ANSWER_QUESTION = 1;
+    static final int TEXT_INPUT_QUESTION = 2;
 
     QuestionBase() {
     }
 
-    QuestionType getQuestionType() {
-        return _questionType;
-    }
-
-    void setQuestionType(QuestionType questionType) {
-        _questionType = questionType;
-    }
-
     String getQuestion() {
-        return _question;
-    }
-
-    void setQuestion(String question) {
-        _question = question;
+        return mQuestion;
     }
 
     boolean isSingleAnswerQuestion() {
-        return _questionType == QuestionType.SINGLE_ANSWER_QUESTION;
+        return mQuestionType == SINGLE_ANSWER_QUESTION;
     }
 
     boolean isMultipleAnswerQuestion() {
-        return _questionType == QuestionType.MULTIPLE_ANSWER_QUESTION;
+        return mQuestionType == MULTIPLE_ANSWER_QUESTION;
     }
 
-    boolean isTextInputQuestion() {
-        return _questionType == QuestionType.TEXT_INPUT_QUESTION;
+    @Retention(RetentionPolicy.SOURCE)
+
+    @IntDef({SINGLE_ANSWER_QUESTION, MULTIPLE_ANSWER_QUESTION, TEXT_INPUT_QUESTION})
+    @interface QuestionType {
     }
 }
