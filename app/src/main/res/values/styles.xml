@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextAppearance.AppCompat.Title</item>
+        <item name="radioButtonStyle">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="checkboxStyle">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="editTextStyle">@style/TextAppearance.AppCompat.Subhead</item>
     </style>
 
 </resources>

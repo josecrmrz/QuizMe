@@ -71,7 +71,7 @@ class MainActivity extends AppCompatActivity {
 
     /* Returns the Card View with the question and answers */
     private CardView getCardViewQuestion(Object question) {
-        CardView cardView = new CardView(getApplicationContext());
+        CardView cardView = new CardView(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         LinearLayout linearLayout = getLinearLayout(question);
 
@@ -91,7 +91,7 @@ class MainActivity extends AppCompatActivity {
     /* This will return the Linear Layout with the question and
      * answers to be added inside a Card View */
     private LinearLayout getLinearLayout(Object question) {
-        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        LinearLayout linearLayout = new LinearLayout(this);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setFocusable(true);
@@ -105,7 +105,7 @@ class MainActivity extends AppCompatActivity {
     /* This will return the Text View of the Question to be added
      * inside the Linear Layout of the CardView */
     private TextView getTextView(Object question) {
-        TextView tvQuestion = new TextView(getApplicationContext());
+        TextView tvQuestion = new TextView(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
@@ -126,7 +126,7 @@ class MainActivity extends AppCompatActivity {
     /* This will return the Radio Group to be added inside a Linear Layout.
      * NOTE: This will be the default grouping of answers to make checking answers easier */
     private RadioGroup getRadioGroup(Object question) {
-        RadioGroup radioGroup = new RadioGroup(getApplicationContext());
+        RadioGroup radioGroup = new RadioGroup(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
@@ -155,7 +155,7 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Radio Button to be added inside a Radio Group */
     private RadioButton getRadioButtonAnswer(Pair<Boolean, String> answer) {
-        RadioButton radioButton = new RadioButton(getApplicationContext());
+        RadioButton radioButton = new RadioButton(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
 
         int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
@@ -170,7 +170,7 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the CheckBox to be added inside a Radio Group */
     private CheckBox getCheckBoxAnswer(Pair<Boolean, String> answer) {
-        CheckBox checkBox = new CheckBox(getApplicationContext());
+        CheckBox checkBox = new CheckBox(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
 
         int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
@@ -185,7 +185,7 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Edit Text to be added inside a Radio Group */
     private EditText getEditBoxAnswer(String answer) {
-        EditText editText = new EditText(getApplicationContext());
+        EditText editText = new EditText(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         editText.setLayoutParams(layoutParams);
@@ -218,7 +218,7 @@ class MainActivity extends AppCompatActivity {
 
                 // This indicates that a question was not answered
                 if (!questionIsAnswered(radioButton)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -230,7 +230,7 @@ class MainActivity extends AppCompatActivity {
                 boolean isCorrect = true;   // assume correct answers
 
                 if (!questionIsAnswered(radioGroup)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -254,7 +254,7 @@ class MainActivity extends AppCompatActivity {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
                 if (!questionIsAnswered(editText)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -266,8 +266,9 @@ class MainActivity extends AppCompatActivity {
         }
 
         // TODO: Show correct/total questions answered correctly
-        Toast.makeText(getApplicationContext(), "Score is " + score, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Score is " + score, Toast.LENGTH_SHORT).show();
     }
+
 
     private boolean questionIsAnswered(RadioButton radioButton) {
         return radioButton != null;
