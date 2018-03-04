@@ -65,11 +65,7 @@ class MainActivity extends AppCompatActivity {
      * question to be added to the Main Activity layout */
     private void createCardViews(LinearLayout linearLayoutMain) {
         for (int q = 0; q < questions.getQuestions().size(); q++) {
-            if (questions.getQuestions().get(q) instanceof ChoiceQuestion) {
-                linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
-            } else if (questions.getQuestions().get(q) instanceof TextInputQuestion) {
-                linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
-            }
+            linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
         }
     }
 
@@ -119,9 +115,9 @@ class MainActivity extends AppCompatActivity {
         tvQuestion.setLayoutParams(layoutParams);
 
         if (question instanceof TextInputQuestion) {
-            tvQuestion.setText(TextInputQuestion.class.cast(question).getQuestion());
+            tvQuestion.setText(((TextInputQuestion) question).getQuestion());
         } else {
-            tvQuestion.setText(ChoiceQuestion.class.cast(question).getQuestion());
+            tvQuestion.setText(((ChoiceQuestion) question).getQuestion());
         }
 
         return tvQuestion;
@@ -140,15 +136,15 @@ class MainActivity extends AppCompatActivity {
         radioGroup.setLayoutParams(layoutParams);
 
         if (question instanceof TextInputQuestion) {
-            EditText editText = getEditBoxAnswer(TextInputQuestion.class.cast(question).getAnswer());
+            EditText editText = getEditBoxAnswer(((TextInputQuestion) question).getAnswer());
             radioGroup.addView(editText);
         } else if (((ChoiceQuestion) question).isSingleAnswerQuestion()) {
-            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswers().size(); i++) {
+            for (int i = 0; i < ((ChoiceQuestion) question).getAnswers().size(); i++) {
                 RadioButton radioButton = getRadioButtonAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(radioButton);
             }
         } else if (((ChoiceQuestion) question).isMultipleAnswerQuestion()) {
-            for (int i = 0; i < ChoiceQuestion.class.cast(question).getAnswers().size(); i++) {
+            for (int i = 0; i < ((ChoiceQuestion) question).getAnswers().size(); i++) {
                 CheckBox checkBox = getCheckBoxAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(checkBox);
             }
