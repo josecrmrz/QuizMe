@@ -20,8 +20,8 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            card_view:cardElevation="@dimen/elevation"
             card_view:cardCornerRadius="@dimen/corner_radius"
+            card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -87,8 +87,8 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            card_view:cardElevation="@dimen/elevation"
             card_view:cardCornerRadius="@dimen/corner_radius"
+            card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -154,8 +154,8 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            card_view:cardElevation="@dimen/elevation"
             card_view:cardCornerRadius="@dimen/corner_radius"
+            card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -205,8 +205,8 @@
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            card_view:cardElevation="@dimen/elevation"
             card_view:cardCornerRadius="@dimen/corner_radius"
+            card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -225,16 +225,18 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusableInTouchMode="true"
+                    android:layout_margin="@dimen/default_margin"
                     android:focusable="true"
-                    android:layout_margin="@dimen/default_margin">
+                    android:focusableInTouchMode="true">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="@string/answer_hint"
                         android:layout_weight="1"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/answer_hint"
+                        android:imeOptions="actionNone"
+                        android:inputType="text"
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding" />
 
@@ -247,14 +249,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom ="16dp"
+            android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
-            android:translationZ="@dimen/elevation"
             android:background="@drawable/rounded_button"
             android:onClick="checkAnswer"
-            android:text="@string/submit" />
+            android:text="@string/submit"
+            android:translationZ="@dimen/elevation" />
 
     </LinearLayout>
 
