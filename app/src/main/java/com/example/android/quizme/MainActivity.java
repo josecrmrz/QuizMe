@@ -1,11 +1,15 @@
 package com.example.android.quizme;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,11 +36,10 @@ class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        reloadQuestions();
+        loadQuestion();
     }
 
-    /* Load the questions to be answered */
-    private void reloadQuestions() {
+    public void loadQuestion() {
         LinearLayout linearLayoutMain = findViewById(R.id.linear_layout_main);
 
         clearCardViews(linearLayoutMain);
@@ -185,13 +188,33 @@ class MainActivity extends AppCompatActivity {
 
     /* This will return the Edit Text to be added inside a Radio Group */
     private EditText getEditBoxAnswer(String answer) {
-        EditText editText = new EditText(this);
+        final EditText editText = new EditText(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         editText.setLayoutParams(layoutParams);
+        editText.setSingleLine();
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editText.setSelectAllOnFocus(true);
         editText.setHint("Enter your answer");
         editText.setTag(answer);
+
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            /* This will override the IME Action to clear focus and hide the keyboard
+             * Without this, it would just close the keyboard without losing focus*/
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    editText.clearFocus();
+
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                }
+                return true;
+            }
+        });
 
         return editText;
     }
