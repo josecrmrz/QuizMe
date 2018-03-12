@@ -29,8 +29,6 @@ class MainActivity extends AppCompatActivity {
     private static final int RADIO_BUTTON_SCORE = 10;
     private static final int CHECK_BOX_SCORE = 10;
 
-    // TODO: Handle device rotation
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +42,7 @@ class MainActivity extends AppCompatActivity {
 
         clearCardViews(linearLayoutMain);
         loadQuestions();
-        createCardViews(linearLayoutMain);
+        addCardViewQuestions(linearLayoutMain);
     }
 
     /* Clear any existing Card Views */
@@ -66,7 +64,7 @@ class MainActivity extends AppCompatActivity {
 
     /* Create the correct Card Views for each type of
      * question to be added to the Main Activity layout */
-    private void createCardViews(LinearLayout linearLayoutMain) {
+    private void addCardViewQuestions(LinearLayout linearLayoutMain) {
         for (int q = 0; q < questions.getQuestions().size(); q++) {
             linearLayoutMain.addView(getCardViewQuestion(questions.getQuestions().get(q)), q);
         }
@@ -116,6 +114,7 @@ class MainActivity extends AppCompatActivity {
         layoutParams.setMargins(margin, margin, margin, 0);
 
         tvQuestion.setLayoutParams(layoutParams);
+        tvQuestion.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
         if (question instanceof TextInputQuestion) {
             tvQuestion.setText(((TextInputQuestion) question).getQuestion());
@@ -167,6 +166,7 @@ class MainActivity extends AppCompatActivity {
         radioButton.setPadding(padding, 0, padding, 0);
         radioButton.setTag(answer.first);
         radioButton.setText(answer.second);
+        radioButton.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         return radioButton;
     }
@@ -182,6 +182,7 @@ class MainActivity extends AppCompatActivity {
         checkBox.setPadding(padding, 0, padding, 0);
         checkBox.setTag(answer.first);
         checkBox.setText(answer.second);
+        checkBox.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         return checkBox;
     }
@@ -192,12 +193,14 @@ class MainActivity extends AppCompatActivity {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         editText.setLayoutParams(layoutParams);
-        editText.setSingleLine();
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
         editText.setSelectAllOnFocus(true);
         editText.setHint("Enter your answer");
         editText.setTag(answer);
+        editText.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -210,7 +213,10 @@ class MainActivity extends AppCompatActivity {
 
                     // Hide the keyboard
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    }
                 }
                 return true;
             }
@@ -224,6 +230,8 @@ class MainActivity extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.linear_layout_main);
 
         int score = 0;
+        int correctAnswers = 0;
+        int numberOfQuestion = questions.getQuestions().size();
 
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             // This will skip anything that is not a CardView
@@ -241,19 +249,20 @@ class MainActivity extends AppCompatActivity {
 
                 // This indicates that a question was not answered
                 if (!questionIsAnswered(radioButton)) {
-                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // if the checked answers tag value is true
                 if ((boolean) radioButton.getTag()) {
+                    correctAnswers++;
                     score += RADIO_BUTTON_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
                 boolean isCorrect = true;   // assume correct answers
 
                 if (!questionIsAnswered(radioGroup)) {
-                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -271,25 +280,42 @@ class MainActivity extends AppCompatActivity {
                 }
 
                 if (isCorrect) {
+                    correctAnswers++;
                     score += CHECK_BOX_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
                 if (!questionIsAnswered(editText)) {
-                    Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Check if the answer stored in the tag matches the entered answer
                 if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString().trim())) {
+                    correctAnswers++;
                     score += EDIT_TEXT_SCORE;
                 }
             }
         }
 
-        // TODO: Show correct/total questions answered correctly
-        Toast.makeText(this, "Score is " + score, Toast.LENGTH_SHORT).show();
+        //LayoutInflater inflater = getLayoutInflater();
+
+//        View layout = inflater.inflate(R.layout.results_toast,
+//                (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+
+// set a message
+//        TextView text = (TextView) layout.findViewById(R.id.text);
+//        text.setText("Button is clicked!");
+//
+//// Toast...
+//        Toast toast = new Toast(getApplicationContext());
+//        toast.setGravity(Gravity.FILL, 0, 0);
+//        toast.setDuration(Toast.LENGTH_LONG);
+//        toast.setView(layout);
+//        toast.show();
+
+        Toast.makeText(getApplicationContext(), getString(R.string.results, correctAnswers, numberOfQuestion, score), Toast.LENGTH_LONG).show();
     }
 
 

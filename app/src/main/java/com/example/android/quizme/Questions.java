@@ -37,8 +37,8 @@ class Questions {
             JSONArray jsonTextInputQuestions = jsonQuestions.getJSONArray("textInput");
 
             createQuestions(jsonMultipleChoiceQuestions, QuestionBase.SINGLE_ANSWER_QUESTION);
-            createQuestions(jsonMultipleAnswerQuestions, QuestionBase.MULTIPLE_ANSWER_QUESTION);
             createQuestions(jsonTrueFalseQuestions, QuestionBase.SINGLE_ANSWER_QUESTION);
+            createQuestions(jsonMultipleAnswerQuestions, QuestionBase.MULTIPLE_ANSWER_QUESTION);
             createQuestions(jsonTextInputQuestions, QuestionBase.TEXT_INPUT_QUESTION);
 
             // shuffle the questions
@@ -80,9 +80,7 @@ class Questions {
                     String question = jsonQuestionObject.getString("question");
                     String answer = jsonQuestionObject.getString("answer");
 
-                    TextInputQuestion textInputQuestion = new TextInputQuestion(question, answer, questionType);
-
-                    mQuestions.add(textInputQuestion);
+                    mQuestions.add(new TextInputQuestion(question, answer, questionType));
                 } else {
                     ArrayList<Pair<Boolean, String>> answers = new ArrayList<>();
 
@@ -103,10 +101,8 @@ class Questions {
                         Collections.shuffle(answers);
                     }
 
-                    ChoiceQuestion choiceQuestion = new ChoiceQuestion(question, answers, questionType);
-
                     // add the question to the array list of mQuestions
-                    mQuestions.add(choiceQuestion);
+                    mQuestions.add(new ChoiceQuestion(question, answers, questionType));
                 }
             }
         } catch (JSONException ex) {

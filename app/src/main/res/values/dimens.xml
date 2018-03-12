@@ -2,6 +2,9 @@
 <resources>
     <dimen name="default_margin">16dp</dimen>
     <dimen name="default_padding">8dp</dimen>
-    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="extra_padding">12dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
     <dimen name="elevation">2dp</dimen>
+    <dimen name="question_text_size">12sp</dimen>
+    <dimen name="answer_text_size">8sp</dimen>
 </resources>
