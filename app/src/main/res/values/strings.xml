@@ -3,5 +3,7 @@
     <string name="answer_hint">Answer here</string>
     <string name="submit">Submit</string>
     <string name="reset">Reset</string>
-    <string name="results">You answered %1$d/%2$d correctly. Your score is %3$d!</string>
+    <string name="results">Correct: %1$d/%2$d\n\n\n\nScore: %3$d</string>
+    <string name="game_over">Game Over</string>
+    <string name="press_reset">Press Reset To Try Again</string>
 </resources>

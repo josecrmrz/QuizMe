@@ -6,8 +6,11 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -16,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,15 +38,22 @@ class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadQuestion();
+        createQuestionViews();
     }
 
-    public void loadQuestion() {
+    public void createQuestionViews() {
         LinearLayout linearLayoutMain = findViewById(R.id.linear_layout_main);
 
         clearCardViews(linearLayoutMain);
         loadQuestions();
         addCardViewQuestions(linearLayoutMain);
+    }
+
+    public void resetQuestionViews(View v) {
+        ScrollView sv = findViewById(R.id.scroll_view_main);
+        sv.scrollTo(0, sv.getTop());
+
+        createQuestionViews();
     }
 
     /* Clear any existing Card Views */
@@ -233,12 +244,14 @@ class MainActivity extends AppCompatActivity {
         int correctAnswers = 0;
         int numberOfQuestion = questions.getQuestions().size();
 
+        // Loop through all Card Views
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             // This will skip anything that is not a CardView
             if (!(linearLayout.getChildAt(i) instanceof CardView)) {
                 continue;
             }
 
+            // Break down the views
             CardView cardView = (CardView) linearLayout.getChildAt(i);
             LinearLayout linearLayout1 = (LinearLayout) cardView.getChildAt(0);
             RadioGroup radioGroup = (RadioGroup) linearLayout1.getChildAt(1);
@@ -247,9 +260,9 @@ class MainActivity extends AppCompatActivity {
                 RadioButton radioButtonAnswer = findViewById(radioGroup.getCheckedRadioButtonId());
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioGroup.indexOfChild(radioButtonAnswer));
 
-                // This indicates that a question was not answered
-                if (!questionIsAnswered(radioButton)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                // Check for unanswered Questions
+                if (radioButton == null) {
+                    toastForUnansweredQuestions();
                     return;
                 }
 
@@ -261,8 +274,9 @@ class MainActivity extends AppCompatActivity {
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
                 boolean isCorrect = true;   // assume correct answers
 
+                // Check for unanswered Questions
                 if (!questionIsAnswered(radioGroup)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                    toastForUnansweredQuestions();
                     return;
                 }
 
@@ -286,8 +300,9 @@ class MainActivity extends AppCompatActivity {
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
-                if (!questionIsAnswered(editText)) {
-                    Toast.makeText(getApplicationContext(), "Please answer all the questions", Toast.LENGTH_SHORT).show();
+                // make sure that the user entered text
+                if (editText.getText().toString().trim().isEmpty()) {
+                    toastForUnansweredQuestions();
                     return;
                 }
 
@@ -299,32 +314,22 @@ class MainActivity extends AppCompatActivity {
             }
         }
 
-        //LayoutInflater inflater = getLayoutInflater();
+        View layout = getLayoutInflater().inflate(R.layout.results_toast, (ViewGroup) findViewById(R.id.custom_toast_layout_id));
 
-//        View layout = inflater.inflate(R.layout.results_toast,
-//                (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+        TextView text = layout.findViewById(R.id.text_view_results);
+        text.setText(getString(R.string.results, correctAnswers, numberOfQuestion, score));
 
-// set a message
-//        TextView text = (TextView) layout.findViewById(R.id.text);
-//        text.setText("Button is clicked!");
-//
-//// Toast...
-//        Toast toast = new Toast(getApplicationContext());
-//        toast.setGravity(Gravity.FILL, 0, 0);
-//        toast.setDuration(Toast.LENGTH_LONG);
-//        toast.setView(layout);
-//        toast.show();
+        Toast toast = new Toast(this);
+        toast.setGravity(Gravity.FILL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
 
-        Toast.makeText(getApplicationContext(), getString(R.string.results, correctAnswers, numberOfQuestion, score), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), getString(R.string.results, correctAnswers, numberOfQuestion, score), Toast.LENGTH_LONG).show();
     }
 
-
-    private boolean questionIsAnswered(RadioButton radioButton) {
-        return radioButton != null;
-    }
-
-    private boolean questionIsAnswered(EditText editText) {
-        return !editText.getText().toString().isEmpty();
+    private void toastForUnansweredQuestions() {
+        Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
     }
 
     private boolean questionIsAnswered(RadioGroup radioGroup) {

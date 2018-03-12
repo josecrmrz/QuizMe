@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scroll_view_main"
     android:fillViewport="true"
     tools:context=".MainActivity">
 
@@ -286,7 +287,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/press_start_2p"
-                android:onClick="checkAnswer"
+                android:onClick="resetQuestionViews"
                 android:paddingTop="@dimen/default_padding"
                 android:text="@string/reset"
                 android:textColor="@color/colorPrimaryDark"
