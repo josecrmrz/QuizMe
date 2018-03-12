@@ -51,7 +51,7 @@ class MainActivity extends AppCompatActivity {
 
     public void resetQuestionViews(View v) {
         ScrollView sv = findViewById(R.id.scroll_view_main);
-        sv.scrollTo(0, sv.getTop());
+        sv.smoothScrollTo(0, sv.getTop());
 
         createQuestionViews();
     }
