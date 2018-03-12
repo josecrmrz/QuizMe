@@ -3,9 +3,11 @@ package com.example.android.quizme;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -114,7 +116,7 @@ class MainActivity extends AppCompatActivity {
         layoutParams.setMargins(margin, margin, margin, 0);
 
         tvQuestion.setLayoutParams(layoutParams);
-        tvQuestion.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        tvQuestion.setTextAppearance(this, R.style.question_style);
 
         if (question instanceof TextInputQuestion) {
             tvQuestion.setText(((TextInputQuestion) question).getQuestion());
@@ -166,7 +168,7 @@ class MainActivity extends AppCompatActivity {
         radioButton.setPadding(padding, 0, padding, 0);
         radioButton.setTag(answer.first);
         radioButton.setText(answer.second);
-        radioButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+        radioButton.setTextAppearance(this, R.style.answer_style);
 
         return radioButton;
     }
@@ -182,7 +184,7 @@ class MainActivity extends AppCompatActivity {
         checkBox.setPadding(padding, 0, padding, 0);
         checkBox.setTag(answer.first);
         checkBox.setText(answer.second);
-        checkBox.setTextColor(getResources().getColor(R.color.colorPrimary));
+        checkBox.setTextAppearance(this, R.style.answer_style);
 
         return checkBox;
     }
@@ -200,7 +202,7 @@ class MainActivity extends AppCompatActivity {
         editText.setSelectAllOnFocus(true);
         editText.setHint("Enter your answer");
         editText.setTag(answer);
-        editText.setTextColor(getResources().getColor(R.color.colorPrimary));
+        editText.setTextAppearance(this, R.style.answer_style);
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 

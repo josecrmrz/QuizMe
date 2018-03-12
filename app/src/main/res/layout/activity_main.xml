@@ -31,6 +31,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/question_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_margin"
@@ -44,6 +45,7 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -53,6 +55,7 @@
                         tools:text="Answer 1" />
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -62,6 +65,7 @@
                         tools:text="Answer 2" />
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -71,6 +75,7 @@
                         tools:text="Answer 3" />
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -102,6 +107,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/question_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_margin"
@@ -115,6 +121,7 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <CheckBox
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -124,6 +131,7 @@
                         tools:text="Answer 1" />
 
                     <CheckBox
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -133,6 +141,7 @@
                         tools:text="Answer 2" />
 
                     <CheckBox
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -142,6 +151,7 @@
                         tools:text="Answer 3" />
 
                     <CheckBox
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -173,6 +183,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/question_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_margin"
@@ -186,6 +197,7 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -195,6 +207,7 @@
                         tools:text="True" />
 
                     <RadioButton
+                        style="@style/answer_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -226,6 +239,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/question_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_margin"
@@ -241,6 +255,7 @@
                     android:focusableInTouchMode="true">
 
                     <EditText
+                        style="@style/answer_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -269,11 +284,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:layout_weight="1"
-                android:paddingTop="@dimen/default_padding"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/press_start_2p"
                 android:onClick="checkAnswer"
+                android:paddingTop="@dimen/default_padding"
                 android:text="@string/reset"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp"
                 android:translationZ="@dimen/elevation" />
 
@@ -282,11 +298,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:layout_weight="1"
-                android:paddingTop="@dimen/default_padding"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/press_start_2p"
                 android:onClick="checkAnswer"
+                android:paddingTop="@dimen/default_padding"
                 android:text="@string/submit"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp"
                 android:translationZ="@dimen/elevation" />
 
