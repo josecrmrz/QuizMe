@@ -8,7 +8,6 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -49,6 +48,7 @@ class MainActivity extends AppCompatActivity {
         addCardViewQuestions(linearLayoutMain);
     }
 
+    /* Reset the questions */
     public void resetQuestionViews(View v) {
         ScrollView sv = findViewById(R.id.scroll_view_main);
         sv.smoothScrollTo(0, sv.getTop());
@@ -300,7 +300,7 @@ class MainActivity extends AppCompatActivity {
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
 
-                // make sure that the user entered text
+                // Check that the user entered an answer
                 if (editText.getText().toString().trim().isEmpty()) {
                     toastForUnansweredQuestions();
                     return;
@@ -314,24 +314,29 @@ class MainActivity extends AppCompatActivity {
             }
         }
 
-        View layout = getLayoutInflater().inflate(R.layout.results_toast, (ViewGroup) findViewById(R.id.custom_toast_layout_id));
-
-        TextView text = layout.findViewById(R.id.text_view_results);
-        text.setText(getString(R.string.results, correctAnswers, numberOfQuestion, score));
-
-        Toast toast = new Toast(this);
-        toast.setGravity(Gravity.FILL, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
-
-//        Toast.makeText(getApplicationContext(), getString(R.string.results, correctAnswers, numberOfQuestion, score), Toast.LENGTH_LONG).show();
+        // Display the results in a custom Toast Message
+        showResults(getString(R.string.results, correctAnswers, numberOfQuestion, score));
     }
 
     private void toastForUnansweredQuestions() {
         Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
     }
 
+    /* Display a custom Toast of the users results */
+    private void showResults(String results) {
+        View layout = getLayoutInflater().inflate(R.layout.results_toast, (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+
+        TextView text = layout.findViewById(R.id.text_view_results);
+        text.setText(results);
+
+        Toast toast = new Toast(this);
+        toast.setGravity(Gravity.FILL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    /* Check that the user answered the CheckBox question */
     private boolean questionIsAnswered(RadioGroup radioGroup) {
         boolean isAnswered = false;
 
