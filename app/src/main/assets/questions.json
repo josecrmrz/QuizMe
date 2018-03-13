@@ -1,7 +1,33 @@
 {
   "boolean": [
     {
-      "question": "The sky is blue.",
+      "question": "Nintendo is the world's largest video game company by revenue.",
+      "answers": [
+        [
+          true,
+          "True"
+        ],
+        [
+          false,
+          "False"
+        ]
+      ]
+    },
+    {
+      "question": "The master of Leonardo, Donatello, Michelangelo, and Raphael is named Shredder.",
+      "answers": [
+        [
+          false,
+          "True"
+        ],
+        [
+          true,
+          "False"
+        ]
+      ]
+    },
+    {
+      "question": "Pokemon was not created by Nintendo.",
       "answers": [
         [
           true,
@@ -16,79 +42,121 @@
   ],
   "multipleChoice": [
     {
-      "question": "What is 2 + 1?",
+      "question": "Nintendo is a consumer electronics and video game company founded in what country?",
       "answers": [
         [
           false,
-          "1"
+          "United States"
         ],
         [
           false,
-          "2"
+          "China"
         ],
         [
           false,
-          "4"
+          "Canada"
         ],
         [
           true,
-          "3"
+          "Japan"
         ]
       ]
     },
     {
-      "question": "What is 5 + 10?",
+      "question": "What does Nintendo stand for?",
       "answers": [
         [
+          false,
+          "Nintendo"
+        ],
+        [
+          false,
+          "Work Hard Play Harder"
+        ],
+        [
           true,
-          "15"
+          "Leave Luck to heaven"
         ],
         [
           false,
-          "50"
+          "Time to play"
+        ]
+      ]
+    },
+    {
+      "question": "Which game featured two Italian brothers going through a series of worlds, hopping on turtles along the way?",
+      "answers": [
+        [
+          false,
+          "Legend of Zelda"
         ],
         [
           false,
-          "10"
+          "Mega Man"
+        ],
+        [
+          true,
+          "Super Mario Brothers"
         ],
         [
           false,
-          "5"
+          "Mr. Game & Watch"
+        ]
+      ]
+    },
+    {
+      "question": "What was Nintendo's first product/service?",
+      "answers": [
+        [
+          false,
+          "Video Games"
+        ],
+        [
+          true,
+          "Playing Cards"
+        ],
+        [
+          false,
+          "Arcades"
+        ],
+        [
+          true,
+          "Hotels"
         ]
       ]
     }
   ],
   "multipleAnswer": [
     {
-      "question": "Select all that apply. What will give you the answer 12?",
+      "question": "Who has been or is an enemy of Mario at some point?",
       "answers": [
         [
           true,
-          "1 x 12"
+          "Donkey Kong"
         ],
         [
           true,
-          "2 x 6"
-        ],
-        [
-          true,
-          "3 x 4"
+          "King Bowser"
         ],
         [
           false,
-          "3 + 4"
+          "Link"
+        ],
+        [
+          false,
+          "Toad"
         ]
       ]
     }
   ],
   "textInput": [
     {
-      "question": "What year is it?",
-      "answer": "2018"
+      "question": "What year was Nintendo started?",
+      "answer": "1889"
     },
     {
-      "question": "What language have you been using for the code behind Android apps?",
-      "answer": "Java"
+      "question": "What is Mario's bother's name?",
+      "answer": "Luigi"
     }
   ]
 }
