@@ -84,27 +84,6 @@
       ]
     },
     {
-      "question": "Which game featured two Italian brothers going through a series of worlds, hopping on turtles along the way?",
-      "answers": [
-        [
-          false,
-          "Legend of Zelda"
-        ],
-        [
-          false,
-          "Mega Man"
-        ],
-        [
-          true,
-          "Super Mario Brothers"
-        ],
-        [
-          false,
-          "Mr. Game & Watch"
-        ]
-      ]
-    },
-    {
       "question": "What was Nintendo's first product/service?",
       "answers": [
         [
@@ -145,6 +124,27 @@
         [
           false,
           "Toad"
+        ]
+      ]
+    },
+    {
+      "question": "Which games require you to save a Princess?",
+      "answers": [
+        [
+          true,
+          "Legend of Zelda"
+        ],
+        [
+          false,
+          "Mega Man"
+        ],
+        [
+          true,
+          "Super Mario Brothers"
+        ],
+        [
+          false,
+          "Mr. Game & Watch"
         ]
       ]
     }
