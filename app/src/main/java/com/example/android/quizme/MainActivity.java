@@ -209,7 +209,7 @@ class MainActivity extends AppCompatActivity {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.setSelectAllOnFocus(true);
-        editText.setHint("Enter your answer");
+        editText.setHint(R.string.enter_name_hint);
         editText.setTag(answer);
         editText.setTextAppearance(this, R.style.answer_style);
 
@@ -319,7 +319,7 @@ class MainActivity extends AppCompatActivity {
     }
 
     private void toastForUnansweredQuestions() {
-        Toast.makeText(this, "Please answer all the questions", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.answer_all_questions, Toast.LENGTH_SHORT).show();
     }
 
     /* Display a custom Toast of the users results */

@@ -6,4 +6,16 @@
     <string name="results">Correct: %1$d/%2$d\n\n\n\nScore: %3$d</string>
     <string name="game_over">Game Over</string>
     <string name="press_reset">Press Reset To Try Again</string>
+    <string name="answer_all_questions">Please answer all the questions</string>
+    <string name="enter_name_hint">Enter your answer</string>
+    <string name="tool_text_answer_1">Answer 1</string>
+    <string name="tool_text_multiple_choice_question">Multiple Choice Question</string>
+    <string name="tool_text_answer_2">Answer 2</string>
+    <string name="tool_text_answer_3">Answer 3</string>
+    <string name="tool_text_answer_4">Answer 4</string>
+    <string name="tool_text_multiple_answer_question">Multiple Answer Question</string>
+    <string name="tool_text_true_false_question">True or False Question</string>
+    <string name="tool_text_true">True</string>
+    <string name="tool_text_false">False</string>
+    <string name="tool_text_input_question">Text Input Question</string>
 </resources>

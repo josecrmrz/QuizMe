@@ -38,7 +38,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    tools:text="Multiple Choice Question" />
+                    tools:text="@string/tool_text_multiple_choice_question" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 1" />
+                        tools:text="@string/tool_text_answer_1" />
 
                     <RadioButton
                         style="@style/answer_style"
@@ -63,7 +63,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 2" />
+                        tools:text="@string/tool_text_answer_2" />
 
                     <RadioButton
                         style="@style/answer_style"
@@ -73,7 +73,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 3" />
+                        tools:text="@string/tool_text_answer_3" />
 
                     <RadioButton
                         style="@style/answer_style"
@@ -83,7 +83,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 4" />
+                        tools:text="@string/tool_text_answer_4" />
 
                 </RadioGroup>
 
@@ -114,7 +114,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    tools:text="Multiple Answer Question" />
+                    tools:text="@string/tool_text_multiple_answer_question" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 1" />
+                        tools:text="@string/tool_text_answer_1" />
 
                     <CheckBox
                         style="@style/answer_style"
@@ -139,7 +139,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 2" />
+                        tools:text="@string/tool_text_answer_2" />
 
                     <CheckBox
                         style="@style/answer_style"
@@ -149,7 +149,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 3" />
+                        tools:text="@string/tool_text_answer_3" />
 
                     <CheckBox
                         style="@style/answer_style"
@@ -159,7 +159,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="Answer 4" />
+                        tools:text="@string/tool_text_answer_4" />
 
                 </RadioGroup>
 
@@ -190,7 +190,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    tools:text="True or False Question" />
+                    tools:text="@string/tool_text_true_false_question" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -205,7 +205,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="True" />
+                        tools:text="@string/tool_text_true" />
 
                     <RadioButton
                         style="@style/answer_style"
@@ -215,7 +215,7 @@
                         android:paddingLeft="@dimen/default_padding"
                         android:paddingRight="@dimen/default_padding"
                         android:textSize="@dimen/answer_text_size"
-                        tools:text="False" />
+                        tools:text="@string/tool_text_false" />
 
                 </RadioGroup>
 
@@ -246,7 +246,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    tools:text="Text Input Question" />
+                    tools:text="@string/tool_text_input_question" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
