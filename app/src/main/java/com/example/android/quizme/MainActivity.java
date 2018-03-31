@@ -26,11 +26,11 @@ import java.io.IOException;
 
 class MainActivity extends AppCompatActivity {
 
-    private Questions questions = null;
+    static Questions questions = null;
 
-    private static final int EDIT_TEXT_SCORE = 10;
-    private static final int RADIO_BUTTON_SCORE = 10;
-    private static final int CHECK_BOX_SCORE = 10;
+    static final int EDIT_TEXT_SCORE = 10;
+    static final int RADIO_BUTTON_SCORE = 10;
+    static final int CHECK_BOX_SCORE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +64,10 @@ class MainActivity extends AppCompatActivity {
     }
 
     /* Create the Questions object containing the list of Questions
-      * by passing in the questions.json file */
+     * by passing in the questions.json file */
     private void loadQuestions() {
         try {
-            questions = new Questions(getAssets().open("questions.json"));
+            MainActivity.questions = new Questions(getAssets().open("questions.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -269,7 +269,7 @@ class MainActivity extends AppCompatActivity {
                 // if the checked answers tag value is true
                 if ((boolean) radioButton.getTag()) {
                     correctAnswers++;
-                    score += RADIO_BUTTON_SCORE;
+                    score += MainActivity.RADIO_BUTTON_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof CheckBox) {
                 boolean isCorrect = true;   // assume correct answers
@@ -295,7 +295,7 @@ class MainActivity extends AppCompatActivity {
 
                 if (isCorrect) {
                     correctAnswers++;
-                    score += CHECK_BOX_SCORE;
+                    score += MainActivity.CHECK_BOX_SCORE;
                 }
             } else if (radioGroup.getChildAt(0) instanceof EditText) {
                 EditText editText = (EditText) radioGroup.getChildAt(0);
@@ -309,7 +309,7 @@ class MainActivity extends AppCompatActivity {
                 // Check if the answer stored in the tag matches the entered answer
                 if ((editText.getTag().toString()).equalsIgnoreCase(editText.getText().toString().trim())) {
                     correctAnswers++;
-                    score += EDIT_TEXT_SCORE;
+                    score += MainActivity.EDIT_TEXT_SCORE;
                 }
             }
         }
