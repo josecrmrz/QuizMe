@@ -31,6 +31,7 @@ class Questions {
     /* Create the Question objects ChoiceQuestion or TextInputQuestion */
     private void createQuestionObjects(JSONObject jsonQuestions) {
         try {
+            // questions are loaded from a json file
             JSONArray jsonMultipleChoiceQuestions = jsonQuestions.getJSONArray("multipleChoice");
             JSONArray jsonMultipleAnswerQuestions = jsonQuestions.getJSONArray("multipleAnswer");
             JSONArray jsonTrueFalseQuestions = jsonQuestions.getJSONArray("boolean");
@@ -46,27 +47,6 @@ class Questions {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    /* Get the JSON String from the questions.json file */
-    private String getJSONQuestions(InputStream jsonQuestionsFile) {
-        String json = null;
-
-        try {
-            int size = jsonQuestionsFile.available();
-            byte[] buffer = new byte[size];
-
-            int numberOfBytes = jsonQuestionsFile.read(buffer);
-            jsonQuestionsFile.close();
-
-            if (numberOfBytes > -1) {
-                json = new String(buffer, "UTF-8");
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return json;
     }
 
     /* Create the question objects and store them in an Array List to be shuffled */
@@ -108,5 +88,26 @@ class Questions {
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
+    }
+
+    /* Get the JSON String from the questions.json file */
+    private String getJSONQuestions(InputStream jsonQuestionsFile) {
+        String json = null;
+
+        try {
+            int size = jsonQuestionsFile.available();
+            byte[] buffer = new byte[size];
+
+            int numberOfBytes = jsonQuestionsFile.read(buffer);
+            jsonQuestionsFile.close();
+
+            if (numberOfBytes > -1) {
+                json = new String(buffer, "UTF-8");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return json;
     }
 }

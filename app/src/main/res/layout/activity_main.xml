@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll_view_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,13 +16,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
+            style="@style/card_view_style"
             card_view:cardCornerRadius="@dimen/corner_radius"
             card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
@@ -33,11 +28,6 @@
 
                 <TextView
                     style="@style/question_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_marginTop="@dimen/default_margin"
                     tools:text="@string/tool_text_multiple_choice_question" />
 
                 <RadioGroup
@@ -46,43 +36,19 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_answer_1" />
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_answer_2" />
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_answer_3" />
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_answer_4" />
 
                 </RadioGroup>
@@ -92,12 +58,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
+            style="@style/card_view_style"
             card_view:cardCornerRadius="@dimen/corner_radius"
             card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
@@ -109,11 +70,6 @@
 
                 <TextView
                     style="@style/question_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_marginTop="@dimen/default_margin"
                     tools:text="@string/tool_text_multiple_answer_question" />
 
                 <RadioGroup
@@ -122,43 +78,19 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <CheckBox
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/check_box_style"
                         tools:text="@string/tool_text_answer_1" />
 
                     <CheckBox
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/check_box_style"
                         tools:text="@string/tool_text_answer_2" />
 
                     <CheckBox
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/check_box_style"
                         tools:text="@string/tool_text_answer_3" />
 
                     <CheckBox
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/check_box_style"
                         tools:text="@string/tool_text_answer_4" />
 
                 </RadioGroup>
@@ -168,12 +100,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
+            style="@style/card_view_style"
             card_view:cardCornerRadius="@dimen/corner_radius"
             card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
@@ -185,11 +112,6 @@
 
                 <TextView
                     style="@style/question_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_marginTop="@dimen/default_margin"
                     tools:text="@string/tool_text_true_false_question" />
 
                 <RadioGroup
@@ -198,23 +120,11 @@
                     android:layout_margin="@dimen/default_margin">
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_true" />
 
                     <RadioButton
-                        style="@style/answer_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size"
+                        style="@style/radio_button_style"
                         tools:text="@string/tool_text_false" />
 
                 </RadioGroup>
@@ -224,12 +134,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
+            style="@style/card_view_style"
             card_view:cardCornerRadius="@dimen/corner_radius"
             card_view:cardElevation="@dimen/elevation"
             card_view:cardUseCompatPadding="true">
@@ -241,11 +146,6 @@
 
                 <TextView
                     style="@style/question_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_marginTop="@dimen/default_margin"
                     tools:text="@string/tool_text_input_question" />
 
                 <RadioGroup
@@ -256,18 +156,10 @@
                     android:focusableInTouchMode="true">
 
                     <EditText
-                        style="@style/answer_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="@string/answer_hint"
+                        style="@style/edit_text_style"
                         android:imeOptions="actionDone"
                         android:inputType="text"
-                        android:paddingLeft="@dimen/default_padding"
-                        android:paddingRight="@dimen/default_padding"
-                        android:textSize="@dimen/answer_text_size" />
+                        android:hint="@string/answer_hint" />
 
                 </RadioGroup>
 
@@ -281,32 +173,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:fontFamily="@font/press_start_2p"
+                style="@style/button_style"
                 android:onClick="resetQuestionViews"
-                android:paddingTop="@dimen/default_padding"
-                android:text="@string/reset"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="12sp"
-                android:translationZ="@dimen/elevation" />
+                android:text="@string/reset" />
 
             <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:fontFamily="@font/press_start_2p"
+                style="@style/button_style"
                 android:onClick="checkAnswer"
-                android:paddingTop="@dimen/default_padding"
-                android:text="@string/submit"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="12sp"
-                android:translationZ="@dimen/elevation" />
+                android:text="@string/submit" />
 
         </LinearLayout>
 

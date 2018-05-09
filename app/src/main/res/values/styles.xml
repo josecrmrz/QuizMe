@@ -8,16 +8,78 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="card_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+    </style>
+
     <style name="question_style">
         <item name="android:fontFamily">@font/press_start_2p</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/question_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
     </style>
 
     <style name="answer_style">
         <item name="android:fontFamily">@font/press_start_2p</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/answer_text_size</item>
+    </style>
+
+    <style name="radio_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:textSize">@dimen/answer_text_size</item>
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="check_box_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:textSize">@dimen/answer_text_size</item>
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="edit_text_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:inputType">text</item>
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:textSize">@dimen/answer_text_size</item>
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="button_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/default_margin</item>
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:translationZ">@dimen/elevation</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

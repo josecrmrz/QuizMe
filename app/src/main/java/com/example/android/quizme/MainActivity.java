@@ -43,9 +43,9 @@ class MainActivity extends AppCompatActivity {
     public void createQuestionViews() {
         LinearLayout linearLayoutMain = findViewById(R.id.linear_layout_main);
 
-        clearCardViews(linearLayoutMain);
-        loadQuestions();
-        addCardViewQuestions(linearLayoutMain);
+        clearCardViews(linearLayoutMain);           // Clear the layout
+        loadQuestions();                            // Load the questions
+        addCardViewQuestions(linearLayoutMain);     // Generate the layout for the questions
     }
 
     /* Reset the questions */
@@ -67,7 +67,8 @@ class MainActivity extends AppCompatActivity {
      * by passing in the questions.json file */
     private void loadQuestions() {
         try {
-            MainActivity.questions = new Questions(getAssets().open("questions.json"));
+            // create the class of questions
+            questions = new Questions(getAssets().open("questions.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,20 +144,22 @@ class MainActivity extends AppCompatActivity {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
-
         layoutParams.setMargins(margin, margin, margin, margin);
 
         radioGroup.setLayoutParams(layoutParams);
 
         if (question instanceof TextInputQuestion) {
+            // Generate a EditText question
             EditText editText = getEditBoxAnswer(((TextInputQuestion) question).getAnswer());
             radioGroup.addView(editText);
         } else if (((ChoiceQuestion) question).isSingleAnswerQuestion()) {
+            // Generate a RadioButton question
             for (int i = 0; i < ((ChoiceQuestion) question).getAnswers().size(); i++) {
                 RadioButton radioButton = getRadioButtonAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(radioButton);
             }
         } else if (((ChoiceQuestion) question).isMultipleAnswerQuestion()) {
+            // Generate a CheckBox Question
             for (int i = 0; i < ((ChoiceQuestion) question).getAnswers().size(); i++) {
                 CheckBox checkBox = getCheckBoxAnswer(((ChoiceQuestion) question).getAnswers().get(i));
                 radioGroup.addView(checkBox);
@@ -169,15 +172,9 @@ class MainActivity extends AppCompatActivity {
     /* This will return the Radio Button to be added inside a Radio Group */
     private RadioButton getRadioButtonAnswer(Pair<Boolean, String> answer) {
         RadioButton radioButton = new RadioButton(this);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
-
-        int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
-
-        radioButton.setLayoutParams(layoutParams);
-        radioButton.setPadding(padding, 0, padding, 0);
-        radioButton.setTag(answer.first);
-        radioButton.setText(answer.second);
-        radioButton.setTextAppearance(this, R.style.answer_style);
+        radioButton.setTextAppearance(this, R.style.radio_button_style);
+        radioButton.setTag(answer.first);       // Tag indicates if the answer is a correct answer
+        radioButton.setText(answer.second);     // Set the text to the answer choice
 
         return radioButton;
     }
@@ -185,15 +182,9 @@ class MainActivity extends AppCompatActivity {
     /* This will return the CheckBox to be added inside a Radio Group */
     private CheckBox getCheckBoxAnswer(Pair<Boolean, String> answer) {
         CheckBox checkBox = new CheckBox(this);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1F);
-
-        int padding = getResources().getDimensionPixelSize(R.dimen.default_padding);
-
-        checkBox.setLayoutParams(layoutParams);
-        checkBox.setPadding(padding, 0, padding, 0);
-        checkBox.setTag(answer.first);
-        checkBox.setText(answer.second);
-        checkBox.setTextAppearance(this, R.style.answer_style);
+        checkBox.setTextAppearance(this, R.style.check_box_style);
+        checkBox.setTag(answer.first);      // Tag indicates if the answer is a correct answer
+        checkBox.setText(answer.second);    // Set the text to the answer choice
 
         return checkBox;
     }
@@ -203,20 +194,16 @@ class MainActivity extends AppCompatActivity {
         final EditText editText = new EditText(this);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        editText.setLayoutParams(layoutParams);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setLayoutParams(layoutParams);     // required since the style does not appear to set width to wrap_content programmatically
+        editText.setTextAppearance(this, R.style.edit_text_style);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.setSelectAllOnFocus(true);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
         editText.setHint(R.string.enter_name_hint);
-        editText.setTag(answer);
-        editText.setTextAppearance(this, R.style.answer_style);
+        editText.setTag(answer);        // The tag holds the answer to compare later
 
+        /* This will override the IME Action to clear focus and hide the keyboard
+         * Without this, it would just close the keyboard without losing focus*/
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            /* This will override the IME Action to clear focus and hide the keyboard
-             * Without this, it would just close the keyboard without losing focus*/
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
