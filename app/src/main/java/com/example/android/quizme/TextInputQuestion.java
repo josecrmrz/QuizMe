@@ -4,7 +4,8 @@ class TextInputQuestion extends QuestionBase {
 
     private String mAnswer = null;
 
-    TextInputQuestion(String question, String answer, @QuestionType int questionType) {
+    /* Creates an Text Input question for EditText views */
+    TextInputQuestion(String question, String answer, QuestionType questionType) {
         mQuestion = question;
         mAnswer = answer;
         mQuestionType = questionType;

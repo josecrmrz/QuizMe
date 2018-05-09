@@ -1,18 +1,18 @@
 package com.example.android.quizme;
 
-import android.support.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static com.example.android.quizme.QuestionBase.QuestionType.MULTIPLE_ANSWER_QUESTION;
+import static com.example.android.quizme.QuestionBase.QuestionType.SINGLE_ANSWER_QUESTION;
 
 abstract class QuestionBase {
 
     String mQuestion = null;
-    @QuestionType int mQuestionType;
+    QuestionType mQuestionType;
 
-    static final int SINGLE_ANSWER_QUESTION = 0;
-    static final int MULTIPLE_ANSWER_QUESTION = 1;
-    static final int TEXT_INPUT_QUESTION = 2;
+    public enum QuestionType {
+        SINGLE_ANSWER_QUESTION,
+        MULTIPLE_ANSWER_QUESTION,
+        TEXT_INPUT_QUESTION
+    }
 
     QuestionBase() {
     }
@@ -27,11 +27,5 @@ abstract class QuestionBase {
 
     boolean isMultipleAnswerQuestion() {
         return mQuestionType == MULTIPLE_ANSWER_QUESTION;
-    }
-
-    @Retention(RetentionPolicy.SOURCE)
-
-    @IntDef({SINGLE_ANSWER_QUESTION, MULTIPLE_ANSWER_QUESTION, TEXT_INPUT_QUESTION})
-    @interface QuestionType {
     }
 }

@@ -8,7 +8,8 @@ class ChoiceQuestion extends QuestionBase {
 
     private ArrayList<Pair<Boolean, String>> mAnswers = null;
 
-    ChoiceQuestion(String question, ArrayList<Pair<Boolean, String>> answers, @QuestionType int questionType) {
+    /* Creates a Choice question object for CheckBox and RadioButton Views*/
+    ChoiceQuestion(String question, ArrayList<Pair<Boolean, String>> answers, QuestionType questionType) {
         mQuestion = question;
         mAnswers = answers;
         mQuestionType = questionType;
